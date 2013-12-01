@@ -1,0 +1,40 @@
+# Messages PL
+title.app=Tasks
+
+#common
+action=Action
+name=Name
+done=Done
+save=Save
+edit=Edit
+delete=Delete
+cancel=Cancel
+choose=--choose--
+logged.in=Logged in as
+
+#paging
+paging.previous=Previous
+paging.next=Next
+paging.displaying=Displaying
+paging.of=of
+paging.to=to
+paging.nothing=Nothing to display
+
+#titles
+title.tasksList=Task list
+title.employees=Empoloyees
+
+tasks.add=Add a new task
+
+tasks.list.title=Tasks found: {0}
+tasks.created=Task {0} has been added.
+tasks.updated=Task {0} has been edited.
+tasks.deleted=Task has been deleted.
+
+tasks.edit.name=Task name
+tasks.edit.taskGroup=Task group
+tasks.edit.employee=Employee
+tasks.edit.estimatedDate=Estimated finish date
+tasks.edit.actualFinishDate=Actual finish date
+
+tasks.filter=Filter by task name...

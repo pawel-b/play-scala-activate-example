@@ -1,0 +1,42 @@
+@(givenForm: Form[net.fwbrasil.activate.play.EntityData[Task]], saveAction: Call, listAction: Call)
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) }
+
+@main {
+    
+    <h1>@Messages("edit")</h1>
+    
+    @form(saveAction) {
+        
+        <fieldset>
+        
+            @inputText(givenForm("name"), '_label -> Messages("name"))
+
+            @select(
+                givenForm("taskGroup"), 
+                TaskGroup.options, 
+                '_label -> Messages("tasks.edit.taskGroup"), '_default -> Messages("choose"),
+                '_showConstraints -> false
+            )
+
+            @inputDate(givenForm("estimatedFinishDate"), '_label -> Messages("tasks.edit.estimatedDate"))
+            @inputDate(givenForm("actualFinishDate"), '_label -> Messages("tasks.edit.actualFinishDate"))
+            
+            @select(
+                givenForm("employee"), 
+                Employee.options, 
+                '_label -> Messages("tasks.edit.employee"), '_default -> Messages("choose"),
+                '_showConstraints -> false
+            )
+
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value='@Messages("save")' class="btn primary">
+            <a href="@listAction" class="btn">@Messages("cancel")</a> 
+        </div>
+    }
+    
+}

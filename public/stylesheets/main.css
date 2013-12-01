@@ -1,0 +1,58 @@
+html {
+	background: #eee;
+}
+
+header h1 {
+	padding: 0.4em 1.1em;
+	color: white;
+	font-weight: normal;
+	font-size: 24px;
+}
+
+form.nomargin-bottom {
+	margin-bottom: 0px;
+}
+
+form.right {
+	text-align: right;
+}
+
+input.nomargin-bottom {
+	margin-bottom: 0px;
+}
+
+
+section#main {
+	position: relative;
+	padding: 1em 2em;
+	min-height: 500px;
+}
+
+section#main .topRight {
+	position: absolute;
+	right: 20px;
+	top: 70px;
+}
+
+#actions {
+	position: relative;
+}
+
+#actions #add {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#pagination {
+	position: relative;
+}
+
+#pagination ul {
+	position: absolute;
+	right: 0;
+}
+
+#pagination ul .current a {
+	color: #666;
+}

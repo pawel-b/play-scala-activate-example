@@ -1,0 +1,115 @@
+@(currentPage: Page[(Task, TaskGroup, Option[Employee])], currentOrderBy: String, currentFilter: String)(implicit flash: play.api.mvc.Flash)
+
+@header(orderBy: String, title: String) = {
+    <th class="col header @if(currentOrderBy.toLowerCase == orderBy.toLowerCase) @{if(currentOrderBy.toLowerCase == currentOrderBy)
+    	"headerSortDown" else "headerSortUp"
+    	}">
+    	@if(orderBy.nonEmpty) {
+        	<a href="@ViewUtils.link(0, currentOrderBy, currentFilter, Some(orderBy))">@title</a>
+        }
+    </th>
+}
+
+@main {
+    
+    <h1>@Messages("tasks.list.title", currentPage.total)</h1>
+
+    @flash.get("success").map { message =>
+        <div class="alert">
+            <strong>@Messages("done").</strong> @message
+        </div>
+    }
+
+    <div id="actions">
+        
+        @helper.form(action=routes.Application.list(), '_class -> "form-search") {
+            <input type="search" class="input-medium search-query nomargin-bottom" id="searchbox" name="f" value="@currentFilter" placeholder='@Messages("tasks.filter")'>
+            <input type="submit" id="searchsubmit" value='@Messages("tasks.filter")' class="btn btn-primary">
+        }
+        
+        <a class="btn btn-success" id="add" href="@routes.Application.create()">@Messages("tasks.add")</a>
+        
+    </div>
+    
+    @Option(currentPage.items).filterNot(_.isEmpty).map { tasks =>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    @header("n", Messages("tasks.edit.name"))
+                    @header("t", Messages("tasks.edit.taskGroup"))
+                    @header("e", Messages("tasks.edit.estimatedDate"))
+                    @header("a", Messages("tasks.edit.actualFinishDate"))
+                    @header("m", Messages("tasks.edit.employee"))
+                    @header("", Messages("action"))
+                </tr>
+            </thead>
+            <tbody>
+
+                @tasks.map { 
+                    case (task, taskGroup, employee) => {
+                        <tr>
+                            <td>@task.name</td>
+                            <td>
+                                @taskGroup.name
+                            </td>
+                            <td>
+                                @ViewUtils.formatDateTime(task.estimatedFinishDate)
+                            </td>
+                            <td>
+                                @ViewUtils.formatDateTime(task.actualFinishDate)
+                            </td>
+                            <td>
+                                @employee.map(_.name).getOrElse { <em>-</em> }
+                            </td>
+                            <td>
+                                @helper.form(action=routes.Application.delete(task.id), 'class -> "nomargin-bottom right") {
+	                            	<a class="btn btn-mini btn-warning" href="@routes.Application.edit(task.id)">@Messages("edit")</a>&nbsp;
+        							<input type="submit" value='@Messages("delete")' class="btn btn-mini btn-danger">
+    							}
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+        <div id="pagination" class="pagination">
+            <ul>
+                @currentPage.prev.map { page =>
+                    <li class="prev">
+                        <a href="@ViewUtils.link(page, currentOrderBy, currentFilter)">&larr; @Messages("paging.previous")</a>
+                    </li> 
+                }.getOrElse {
+                    <li class="prev disabled">
+                        <a>&larr; @Messages("paging.previous")</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>@Messages("paging.displaying") @(currentPage.offset + 1) @Messages("paging.to") @(currentPage.offset + tasks.size) @Messages("paging.of") @currentPage.total</a>
+                </li>
+                @currentPage.next.map { page =>
+                    <li class="next">
+                        <a href="@ViewUtils.link(page, currentOrderBy, currentFilter)">@Messages("paging.next") &rarr;</a>
+                    </li> 
+                }.getOrElse {
+                    <li class="next disabled">
+                        <a>@Messages("paging.next") &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        
+    }.getOrElse {
+        
+        <div class="well">
+            <em>@Messages("paging.nothing")</em>
+        </div>
+        
+    }
+
+        
+}
+
+            

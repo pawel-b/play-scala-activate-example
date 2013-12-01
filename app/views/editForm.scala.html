@@ -1,0 +1,7 @@
+@(id: String, taskForm: Form[net.fwbrasil.activate.play.EntityData[Task]])
+
+@baseEditForm(
+givenForm = taskForm
+, saveAction = routes.Application.update(id)
+, listAction = routes.Application.list()
+)
